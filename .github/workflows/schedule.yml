@@ -2,7 +2,8 @@ name: Daily Report
 
 on:
   schedule:
-    - cron: "0 0 2 * * ?"
+    # 每天凌晨2点触发
+    - cron: "0 2 * * *"
   workflow_dispatch:
 
 
