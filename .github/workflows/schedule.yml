@@ -14,3 +14,7 @@ jobs:
       - uses: actions/checkout@master
       - name: Send Report
         run: go run main.go
+        env:
+          BOT_URL: ${{ secrets.BOT_URL }}
+          USERNAME: ${{ secrets.USERNAME }}
+          WAKATIME_APIKEY: ${{ secrets.WAKATIME_APIKEY }}
