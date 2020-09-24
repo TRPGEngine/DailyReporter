@@ -7,17 +7,14 @@ import (
 	"os"
 )
 
-func GetEnvConfig(key string) string {
-	return os.Getenv(key)
-}
-
 func main() {
-	apikey := GetEnvConfig("WAKATIME_APIKEY")
+	apikey := os.Getenv("WAKATIME_APIKEY")
 	wakaReport := report.GetWakatimeCodingReport(apikey)
 
-	username := GetEnvConfig("USERNAME")
+	username := os.Getenv("USERNAME")
 	githubReport := report.GetGithubActiveReport(username)
 
-	fmt.Print(wakaReport)
-	fmt.Print(githubReport)
+	reportText := wakaReport + "---------\n" + githubReport
+
+	fmt.Print(reportText)
 }

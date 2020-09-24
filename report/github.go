@@ -22,8 +22,31 @@ func getEventTypeChineseName(eventType string) string {
 	}
 }
 
-func getEventPayloadText(event github.Event) string {
-	return ""
+func getEventPayloadText(event *github.Event) string {
+	payload, err := event.ParsePayload()
+	if err != nil {
+		panic(err)
+	}
+
+	switch *event.Type {
+	case "PushEvent":
+		{
+			data := payload.(*github.PushEvent)
+			text := *data.Commits[0].Message
+			if len(data.Commits) > 1 {
+				text += fmt.Sprintf("...等 %d 个提交", len(data.Commits))
+			}
+			return text
+		}
+	case "PullRequestEvent":
+		{
+			data := payload.(*github.PullRequestEvent)
+			text := *data.PullRequest.URL
+			return text
+		}
+	default:
+		return *event.Repo.URL
+	}
 }
 
 func GetGithubActiveReport(username string) string {
@@ -43,18 +66,10 @@ func GetGithubActiveReport(username string) string {
 		createdAt := event.GetCreatedAt()
 
 		if createdAt.Unix() < today.Unix() && createdAt.Unix() > yesterday.Unix() {
-			payload, err := event.ParsePayload()
-			if err != nil {
-				panic(err)
-			}
-
-			fmt.Printf("%+v", payload)
-
 			eventType := getEventTypeChineseName(event.GetType())
 			eventRepoName := event.GetRepo().GetName()
-			text += fmt.Sprintf("%s %s\n", eventType, eventRepoName)
+			text += fmt.Sprintf("%s[%s]: %s\n", eventType, eventRepoName, getEventPayloadText(event))
 		}
-
 	}
 
 	return text
