@@ -13,6 +13,8 @@ func getEventTypeChineseName(eventType string) string {
 		return "提交"
 	case "PullRequestEvent":
 		return "请求合并"
+	case "WatchEvent":
+		return "关注"
 	case "CreateEvent":
 		return "创建"
 	case "ForkEvent":
@@ -45,7 +47,7 @@ func getEventPayloadText(event *github.Event) string {
 			return text
 		}
 	default:
-		return *event.Repo.URL
+		return "https://github.com/" + event.Repo.GetName()
 	}
 }
 

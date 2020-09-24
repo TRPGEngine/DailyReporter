@@ -1,0 +1,15 @@
+name: Daily Report
+
+on:
+  schedule:
+    - cron: "0 0 2 * * ?"
+  workflow_dispatch:
+
+
+jobs:
+  Daily Report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Send Report
+        run: go run main.go
