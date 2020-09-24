@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  Daily Report:
+  sendMsg:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
