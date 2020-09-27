@@ -9,6 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func sendReport(targetUrl string, reportText string) {
@@ -45,7 +46,9 @@ func main() {
 	username := os.Getenv("USERNAME")
 	githubReport := report.GetGithubActiveReport(username)
 
-	reportText := wakaReport + "---------\n" + githubReport
+	weatherReport := report.GetWeatherReport()
+
+	reportText := strings.Join([]string{wakaReport, githubReport, weatherReport}, "---------\n")
 
 	sendReport(botUrl, reportText)
 }
