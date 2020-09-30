@@ -4,8 +4,13 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/go-github/v32/github"
+	"strings"
 	"time"
 )
+
+func getCommitTitle(commitStr string) string {
+	return strings.Split(commitStr, "\n")[0]
+}
 
 func getEventTypeChineseName(eventType string) string {
 	switch eventType {
@@ -34,7 +39,7 @@ func getEventPayloadText(event *github.Event) string {
 	case "PushEvent":
 		{
 			data := payload.(*github.PushEvent)
-			text := *data.Commits[0].Message
+			text := getCommitTitle(*data.Commits[0].Message)
 			if len(data.Commits) > 1 {
 				text += fmt.Sprintf("...等 %d 个提交", len(data.Commits))
 			}
