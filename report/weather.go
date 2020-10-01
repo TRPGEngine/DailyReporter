@@ -7,7 +7,7 @@ import (
 
 // https://wttr.in/Shanghai?lang=zh-cn&Tq0
 func GetWeatherReport() string {
-	req, err := http.NewRequest("GET", "https://wttr.in/Shanghai?lang=zh-cn&Tq0", nil)
+	req, err := http.NewRequest("GET", "https://wttr.in/Shanghai?lang=zh-cn&mTq0", nil)
 	if err != nil {
 		panic(err)
 	}
