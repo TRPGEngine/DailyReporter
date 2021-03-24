@@ -48,7 +48,9 @@ func main() {
 
 	weatherReport := report.GetWeatherReport()
 
-	reportText := strings.Join([]string{wakaReport, githubReport, weatherReport}, "---------\n")
+	trpgReport := report.GetTRPGEngineReport()
+
+	reportText := strings.Join([]string{wakaReport, githubReport, weatherReport, trpgReport}, "---------\n")
 
 	sendReport(botUrl, reportText)
 }

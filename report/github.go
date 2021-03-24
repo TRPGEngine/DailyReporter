@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/google/go-github/v32/github"
 	"strings"
-	"time"
 )
 
 func getCommitTitle(commitStr string) string {
@@ -64,9 +63,8 @@ func GetGithubActiveReport(username string) string {
 		panic(err)
 	}
 
-	now := time.Now()
-	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
-	yesterday := today.AddDate(0, 0, -1)
+	today := getToday()
+	yesterday := getYesterday()
 	text := ""
 
 	for _, event := range events {
